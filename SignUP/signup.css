@@ -111,9 +111,10 @@ form button:hover {
     margin-bottom: 1rem;
 }
 
-.text span {
+.text span a {
     color: rgb(61, 61, 236);
     cursor: pointer;
+    text-decoration: none;
 }
 
 .text span:hover {
