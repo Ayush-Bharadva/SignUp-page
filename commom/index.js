@@ -8,5 +8,5 @@ signupBtn.addEventListener("click", () => {
 });
 //go to login page
 loginBtn.addEventListener("click", () => {
-	window.location.assign("../Login/login.html");
+	window.location.assign("./Login/login.html");
 });
