@@ -1,0 +1,121 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: linear-gradient(to right, #9CC6FC, #D4C6FC);
+}
+
+.blue-gradient {
+    background: linear-gradient(to right, #00ccff 0%, #3333cc 100%);
+}
+
+main {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+}
+
+.container {
+    position: absolute;
+    padding: 1rem;
+    background-color: aliceblue;
+    border-radius: 12px;
+    width: auto;
+    min-width: 30%;
+    box-shadow: 0px 10px 15px #777;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.heading {
+    font-size: 2rem;
+    margin: 1.5rem auto;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-evenly;
+    min-width: 100%;
+    margin: 2rem auto;
+    border-radius: 7px;
+    padding: 1rem;
+}
+
+.buttons .signup {
+    color: white;
+}
+
+.buttons .signup:hover {
+    background: linear-gradient(to right, #02bdeb 0%, #2e2eb9 100%);
+}
+
+.buttons .login:hover {
+    background-color: rgb(235, 235, 235);
+}
+
+.buttons .login,
+.buttons .signup {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    width: 50%;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+}
+
+form {
+    display: flex;
+    padding: 2rem 1rem;
+    flex-direction: column;
+    margin-bottom: 2.5rem;
+}
+
+.fields {
+    display: flex;
+    flex-direction: column;
+}
+
+.fields input {
+    margin: 0.6rem 0;
+    font-size: 1.1rem;
+    padding: 0.7rem 0 0.7rem 0.7rem;
+    border-radius: 10px;
+    outline: none;
+    border: 1px solid lightgrey;
+}
+
+form button {
+    margin-top: 2rem;
+    padding: 0.5rem 0;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+form button:hover {
+    background: linear-gradient(to right, #02bdeb 0%, #2e2eb9 100%);
+}
+
+.text {
+    margin-bottom: 1rem;
+}
+
+.text span {
+    color: rgb(61, 61, 236);
+    cursor: pointer;
+}
+
+.text span:hover {
+    text-decoration: underline;
+}
