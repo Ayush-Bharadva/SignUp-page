@@ -1,38 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="style.css" />
+        <script src="./index.js" defer></script>
+        <title>SignUp</title>
+    </head>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <script src="./index.js" defer></script>
-    <title>SignUp</title>
-</head>
+    <body>
+        <main>
+            <div class="container">
+                <h1 class="heading">SignUp Form</h1>
+                <div class="buttons">
+                    <button class="login">Login</button>
+                    <button class="signup blue-gradient">SignUp</button>
+                </div>
 
-<body>
-    <main>
-        <div class="container">
-            <h1 class="heading">SignUp Form</h1>
-            <div class="buttons">
-                <button class="login">Login</button>
-                <button class="signup blue-gradient">SignUp</button>
+                <div class="signup-form">
+                    <form id="signup-form" action="">
+                        <div class="fields">
+                            <input
+                                id="username"
+                                type="text"
+                                placeholder="Username"
+                            />
+                            <input
+                                id="email"
+                                type="email"
+                                placeholder="Email"
+                            />
+                            <input
+                                id="pass"
+                                type="password"
+                                placeholder="Password"
+                            />
+                            <input
+                                id="confirm-pass"
+                                type="password"
+                                placeholder="Confirm password"
+                            />
+                        </div>
+                        <button
+                            class="submit-signup blue-gradient"
+                            type="submit"
+                        >
+                            SignUp
+                        </button>
+                    </form>
+                </div>
+
+                <p class="text">
+                    Already have an account
+                    <span class="login-link"
+                        ><a href="./login.html">Login</a></span
+                    >
+                </p>
             </div>
-
-            <div class="signup-form">
-                <form action="">
-                    <div class="fields">
-                        <input type="text" placeholder="Username">
-                        <input type="email" placeholder="Email" />
-                        <input type="password" placeholder="Password" />
-                        <input type="password" placeholder="Confirm password" />
-                    </div>
-                    <button class="submit-signup blue-gradient" type="submit">SignUp</button>
-                </form>
-            </div>
-
-            <p class="text">Already have an account <span class="login-link"><a href="./login.html">Login</a></span></p>
-        </div>
-    </main>
-</body>
-
+        </main>
+    </body>
 </html>
