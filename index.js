@@ -1,6 +1,4 @@
-console.log("start...");
 /* Navigation between pages */
-
 const signupBtn = document.querySelector(".signup");
 const loginBtn = document.querySelector(".login");
 
@@ -13,45 +11,75 @@ loginBtn.addEventListener("click", () => {
     window.location.assign("./login.html");
 });
 
-// all Existing Users
-let existingUsers = [];
-// UserData in JSON
-let storedUserDataJSON = localStorage.getItem("allUserInfo");
-
-if (storedUserDataJSON) {
-    existingUsers = JSON.parse(storedUserDataJSON);
-}
-
-console.log("allusers :", existingUsers);
-
+/* form submit operation */
 const signUpForm = document.querySelector("#signup-form");
+const username = document.querySelector("#username");
+const email = document.querySelector("#email");
+const password = document.querySelector("#pass");
+const confirmPass = document.querySelector("#confirm-pass");
+
+// all Existing Users
+// let existingUsers = [];
+// // UserData in JSON
+// let storedUserDataJSON = localStorage.getItem("allUserInfo");
+
+// if (storedUserDataJSON) {
+//     existingUsers = JSON.parse(storedUserDataJSON);
+// }
+
+// console.log("allusers :", existingUsers);
 
 signUpForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    // input credentials
-    const username = document.querySelector("#username").value;
-    const email = document.querySelector("#email").value;
-    const pass = document.querySelector("#pass").value;
-    const confirmPass = document.querySelector("#confirm-pass").value;
-
-    if (pass === confirmPass) {
-        // getting previous users
-        let prevUsers = JSON.parse(localStorage.getItem("allUserInfo")) || [];
-
-        // combining current + previous users
-        prevUsers.push({ username, email, pass, confirmPass });
-
-        // storing user credentials in local storage
-        localStorage.setItem("allUserInfo", JSON.stringify(prevUsers));
-
-        console.log("user added...");
-        // clearing form
-        signUpForm.reset();
+    if (validateUser()) {
+        console.log("true user credentials..");
     } else {
-        console.log("pass and confirmPass must be same...");
+        console.log("false user credentials..");
     }
 });
 
-console.log("end...");
-//
+// function to validate user
+function validateUser() {
+    const usernameValue = username.value;
+    const emailValue = email.value;
+    const passwordValue = password.value;
+    const confirmPassValue = confirmPass.value;
+
+    // checking input fields
+    if (usernameValue === "") {
+        setInputError(username, "username cannot be blank");
+    } else {
+        setInputSuccess(username);
+    }
+
+    if (emailValue === "") {
+        setInputError(email, "email cannot be blank");
+    } else {
+        setInputSuccess(email);
+    }
+
+    if (passwordValue === "") {
+        setInputError(password, "password cannot be blank");
+    } else {
+        setInputSuccess(password);
+    }
+
+    if (confirmPassValue === "") {
+        setInputError(confirmPass, "confirm password cannot be blank");
+    } else if (passwordValue !== confirmPassValue) {
+        setInputError(
+            confirmPass,
+            "password and confirm password should be same"
+        );
+    } else {
+        setInputSuccess(confirmPass);
+    }
+}
+
+function setInputError(input, message) {
+    console.log(input, message);
+}
+function setInputSuccess(input) {
+    console.log(input, "correct");
+}
