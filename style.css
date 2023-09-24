@@ -108,6 +108,10 @@ form {
     visibility: hidden;
 }
 
+.fields small.error {
+    visibility: visible;
+}
+
 form button {
     margin-top: 2rem;
     padding: 0.5rem 0;
