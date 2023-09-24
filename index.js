@@ -1,15 +1,3 @@
-/* Navigation between pages */
-// const loginBtn = document.querySelector(".login");
-
-// // go to signUp page
-// signupBtn.addEventListener("click", () => {
-//     window.location.assign("./index.html");
-// });
-// //go to login page
-// loginBtn.addEventListener("click", () => {
-//     window.location.assign("./login.html");
-// });
-
 /* form submit operation */
 const signUpForm = document.querySelector("#signup-form");
 const username = document.querySelector("#username");
@@ -17,7 +5,8 @@ const email = document.querySelector("#email");
 const password = document.querySelector("#pass");
 const confirmPass = document.querySelector("#confirm-pass");
 const signupBtn = document.querySelector(".signup");
-var userCredentials = {};
+
+let userCredentials = {};
 // all Existing Users
 let existingUsers = [];
 // UserData in JSON
@@ -31,17 +20,14 @@ if (storedUserDataJSON) {
 
 signUpForm.addEventListener("submit", (event) => {
     event.preventDefault();
+    userCredentials = {
+        usernameValue: username.value,
+        emailValue: email.value,
+        passwordValue: password.value,
+        confirmPassValue: confirmPass.value,
+    };
 
     if (validateUser(userCredentials)) {
-        // console.log("true user credentials..");
-
-        userCredentials = {
-            usernameValue: username.value,
-            emailValue: email.value,
-            passwordValue: password.value,
-            confirmPassValue: confirmPass.value,
-        };
-
         let prevUsers = JSON.parse(localStorage.getItem("allUserInfo")) || [];
 
         // combining current + previous users
@@ -49,17 +35,17 @@ signUpForm.addEventListener("submit", (event) => {
 
         // storing user credentials in local storage
         localStorage.setItem("allUserInfo", JSON.stringify(prevUsers));
+        signUpForm.reset();
     } else {
         console.log("false user credentials..");
     }
-    signUpForm.reset();
 });
 
 // function to validate user
 function validateUser(user) {
-    var { usernameValue, emailValue, passwordValue, confirmPassValue } = user;
-
-    var isValid = true;
+    let { usernameValue, emailValue, passwordValue, confirmPassValue } = user;
+    console.log(user);
+    let isValid = true;
 
     // checking input fields
     if (usernameValue === "") {
@@ -107,5 +93,6 @@ function setInputError(input, message) {
 function setInputSuccess(input) {
     const field = input;
     input.style.border = "1.5px solid green";
+    input.nextElementSibling.classList.remove("error");
     console.log(field);
 }
