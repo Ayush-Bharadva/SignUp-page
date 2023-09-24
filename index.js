@@ -16,7 +16,7 @@ if (storedUserDataJSON) {
     existingUsers = JSON.parse(storedUserDataJSON);
 }
 
-// console.log("allusers :", existingUsers);
+let successfulSignup = false; // Flag to indicate successful signup
 
 signUpForm.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -26,7 +26,9 @@ signUpForm.addEventListener("submit", (event) => {
         passwordValue: password.value,
         confirmPassValue: confirmPass.value,
     };
+    const isUserSignedup = false;
 
+    // if true add user
     if (validateUser(userCredentials)) {
         let prevUsers = JSON.parse(localStorage.getItem("allUserInfo")) || [];
 
@@ -36,10 +38,18 @@ signUpForm.addEventListener("submit", (event) => {
         // storing user credentials in local storage
         localStorage.setItem("allUserInfo", JSON.stringify(prevUsers));
         signUpForm.reset();
+        isUserSignedup = true;
     } else {
         console.log("false user credentials..");
     }
 });
+
+// Check for successful signup and redirect to login page
+setInterval(() => {
+    if (successfulSignup) {
+        window.location.href = "./login.html";
+    }
+}, 500); // Check every 500 milliseconds for successfulSignup flag
 
 // function to validate user
 function validateUser(user) {
@@ -59,7 +69,17 @@ function validateUser(user) {
         isValid = false;
         setInputError(email, "email cannot be blank");
     } else {
-        setInputSuccess(email);
+        // check if email is already registered
+        const isEmailRegistered = existingUsers.some((existingUser) => {
+            return existingUser.emailValue === emailValue;
+        });
+
+        if (isEmailRegistered) {
+            isValid = false;
+            setInputError(email, "email already registered");
+        } else {
+            setInputSuccess(email);
+        }
     }
 
     if (passwordValue === "") {
@@ -95,4 +115,12 @@ function setInputSuccess(input) {
     input.style.border = "1.5px solid green";
     input.nextElementSibling.classList.remove("error");
     console.log(field);
+}
+
+// navigate to login page on submit
+if (isUserSignedup) {
+    const submitSignup = document.querySelector(".submit-signup");
+    submitSignup.addEventListener("click", () => {
+        window.location.assign("./login.html");
+    });
 }
