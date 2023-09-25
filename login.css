@@ -93,6 +93,25 @@ form {
     border: 1px solid lightgrey;
 }
 
+.fields input.success {
+    border: 1.5px solid green;
+}
+
+.fields input.error {
+    border: 1.5px solid red;
+}
+
+.fields small {
+    text-align: left;
+    padding: 3px 0 3px 7px;
+    color: red;
+    visibility: hidden;
+}
+
+.fields small.error {
+    visibility: visible;
+}
+
 form button {
     margin-top: 2rem;
     padding: 0.5rem 0;
