@@ -1,0 +1,75 @@
+signUpForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const usernameValue = username.value;
+    const emailValue = email.value;
+    const passwordValue = password.value;
+    const confirmPassValue = confirmPass.value;
+
+    if (passwordValue === confirmPassValue) {
+        // getting previous users
+        let prevUsers = JSON.parse(localStorage.getItem("allUserInfo")) || [];
+
+        // combining current + previous users
+        prevUsers.push({
+            usernameValue,
+            emailValue,
+            passwordValue,
+            confirmPassValue,
+        });
+
+        // storing user credentials in local storage
+        localStorage.setItem("allUserInfo", JSON.stringify(prevUsers));
+
+        console.log("user added...");
+        // clearing form
+        signUpForm.reset();
+    } else {
+        console.log("pass and confirmPass must be same...");
+    }
+});
+
+function validateUser() {
+    const usernameValue = username.value;
+    const emailValue = email.value;
+    const passwordValue = password.value;
+    const confirmPassValue = confirmPass.value;
+
+    // checking input fields
+    if (usernameValue === "") {
+        setInputError(username, "username cannot be blank");
+    } else {
+        setInputSuccess(username);
+    }
+
+    if (emailValue === "") {
+        setInputError(email, "email cannot be blank");
+    } else {
+        setInputSuccess(email);
+    }
+
+    if (passwordValue === "") {
+        setInputError(password, "password cannot be blank");
+    } else {
+        setInputSuccess(password);
+    }
+
+    if (confirmPassValue === "") {
+        setInputError(confirmPass, "confirm password cannot be blank");
+    } else if (passwordValue !== confirmPassValue) {
+        setInputError(
+            confirmPass,
+            "password and confirm password should be same"
+        );
+    } else {
+        setInputSuccess(confirmPass);
+    }
+}
+
+// function setInputError(input) {
+
+// }
+function setInputSuccess(input, message) {
+    const fields = input.parentElement;
+    const small = fields.querySelector("small");
+    small.innerText = message;
+}
