@@ -1,12 +1,11 @@
 /* for signup form operation */
 const signUpForm = document.querySelector("#signup-form");
-const username = document.querySelector("#username");
-const email = document.querySelector("#email");
-const password = document.querySelector("#pass");
-const confirmPass = document.querySelector("#confirm-pass");
+const usernameInput = document.querySelector("#username");
+const emailInput = document.querySelector("#email");
+const passwordInput = document.querySelector("#pass");
+const confirmPassInput = document.querySelector("#confirm-pass");
 const signupBtn = document.querySelector(".signup");
 // TODO change variable names, username -> userameValue, userameValue -> username(similarly for all)
-let userCredentials = {};
 // all Existing Users
 let existingUsers = [];
 // UserData in JSON
@@ -16,34 +15,43 @@ if (storedUserDataJSON) {
 	existingUsers = JSON.parse(storedUserDataJSON);
 }
 
-let successfulSignup = false; // Flag to indicate successful signup
-
 if (signUpForm) {
 	signUpForm.addEventListener("submit", (event) => {
+		// console.log(event);
+
 		event.preventDefault();
-		userCredentials = {
-			usernameValue: username.value,
-			emailValue: email.value,
-			passwordValue: password.value,
-			confirmPassValue: confirmPass.value,
-		};
+
+		console.log(event.target, "event.target");
+
+		const form = new FormData(event.target).entries();
+
+		// for (const [key, value] of form) {
+		// 	console.log("key :", key, "value :", value);
+		// }
+		// console.log({ ...Object.fromEntries(form) });
+
+		const userDetails = { ...Object.fromEntries(form) };
+
+		console.log(userDetails, "userdetails");
+
 		let isUserSignedup = false;
 
 		// if true add user
-		if (validateUser(userCredentials)) {
-			let prevUsers =
-				JSON.parse(localStorage.getItem("allUserInfo")) || [];
-
+		if (validateUser(userDetails)) {
 			// combining current + previous users
-			prevUsers.push(userCredentials);
+			existingUsers.push({ ...userDetails });
+
+			console.log(existingUsers, "existing users");
 
 			// storing user credentials in local storage
-			localStorage.setItem("allUserInfo", JSON.stringify(prevUsers));
+			localStorage.setItem("allUserInfo", JSON.stringify(existingUsers));
+
 			signUpForm.reset();
+
 			isUserSignedup = true;
-			if (isUserSignedup) {
-				window.location.href = "./login.html";
-			}
+			// if (isUserSignedup) {
+			// 	window.location.href = "./login.html";
+			// }
 		} else {
 			console.log("false user credentials..");
 		}
@@ -52,54 +60,54 @@ if (signUpForm) {
 
 // function to validate user
 function validateUser(user) {
-	let { usernameValue, emailValue, passwordValue, confirmPassValue } = user;
-	console.log(user);
+	let { username, email, password, confirmPassword } = user;
 	let isValid = true;
 
 	// checking input fields
-	if (usernameValue === "") {
+	if (!username) {
 		isValid = false;
-		setInputError(username, "username cannot be blank");
+		setInputError(usernameInput, "username cannot be blank");
 	} else {
-		setInputSuccess(username);
+		setInputSuccess(usernameInput);
 	}
 
-	if (emailValue === "") {
+	if (!email) {
 		isValid = false;
-		setInputError(email, "email cannot be blank");
+		setInputError(emailInput, "email cannot be blank");
 	} else {
 		// check if email is already registered
 		const isEmailRegistered = existingUsers.some((existingUser) => {
-			return existingUser.emailValue === emailValue;
+			return existingUser.email === email;
 		});
-
+		console.log(isEmailRegistered);
 		if (isEmailRegistered) {
 			isValid = false;
-			setInputError(email, "email already registered");
+			setInputError(emailInput, "email already registered");
 		} else {
-			setInputSuccess(email);
+			setInputSuccess(emailInput);
 		}
 	}
 
-	if (passwordValue === "") {
+	if (!password) {
 		isValid = false;
-		setInputError(password, "password cannot be blank");
+		setInputError(passwordInput, "password cannot be blank");
 	} else {
-		setInputSuccess(password);
+		setInputSuccess(passwordInput);
 	}
 
-	if (confirmPassValue === "") {
+	if (!confirmPassword) {
 		isValid = false;
-		setInputError(confirmPass, "confirm password cannot be blank");
-	} else if (passwordValue !== confirmPassValue) {
+		setInputError(confirmPassInput, "confirm password cannot be blank");
+	} else if (password !== confirmPassword) {
 		isValid = false;
 		setInputError(
-			confirmPass,
+			confirmPassInput,
 			"password and confirm password should be same"
 		);
 	} else {
-		setInputSuccess(confirmPass);
+		setInputSuccess(confirmPassInput);
 	}
+	console.log(isValid);
 	return isValid;
 }
 
@@ -149,7 +157,7 @@ function validateLogin(user) {
 	let isValidCredential = true;
 
 	// for email
-	if (emailValue === "") {
+	if (emailValue) {
 		isValidCredential = false;
 		console.log("email cannot be blank");
 		setInputError(loginEmail, "email cannot be blank");
