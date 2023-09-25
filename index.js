@@ -26,7 +26,7 @@ signUpForm.addEventListener("submit", (event) => {
 		passwordValue: password.value,
 		confirmPassValue: confirmPass.value,
 	};
-	const isUserSignedup = false;
+	let isUserSignedup = false;
 
 	// if true add user
 	if (validateUser(userCredentials)) {
@@ -39,17 +39,13 @@ signUpForm.addEventListener("submit", (event) => {
 		localStorage.setItem("allUserInfo", JSON.stringify(prevUsers));
 		signUpForm.reset();
 		isUserSignedup = true;
+		if (isUserSignedup) {
+			window.location.href = "./login.html";
+		}
 	} else {
 		console.log("false user credentials..");
 	}
 });
-
-// Check for successful signup and redirect to login page
-setInterval(() => {
-	if (successfulSignup) {
-		window.location.href = "./login.html";
-	}
-}, 500); // Check every 500 milliseconds for successfulSignup flag
 
 // function to validate user
 function validateUser(user) {
@@ -114,13 +110,4 @@ function setInputSuccess(input) {
 	const field = input;
 	input.style.border = "1.5px solid green";
 	input.nextElementSibling.classList.remove("error");
-	console.log(field);
-}
-
-// navigate to login page on submit
-if (isUserSignedup) {
-	const submitSignup = document.querySelector(".submit-signup");
-	submitSignup.addEventListener("click", () => {
-		window.location.assign("./login.html");
-	});
 }
