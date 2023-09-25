@@ -1,48 +1,120 @@
-/* Navigation between pages */
-
+/* form submit operation */
+const signUpForm = document.querySelector("#signup-form");
+const username = document.querySelector("#username");
+const email = document.querySelector("#email");
+const password = document.querySelector("#pass");
+const confirmPass = document.querySelector("#confirm-pass");
 const signupBtn = document.querySelector(".signup");
-const loginBtn = document.querySelector(".login");
 
-// go to signUp page
-signupBtn.addEventListener("click", () => {
-	window.location.assign("./index.html");
-});
-//go to login page
-loginBtn.addEventListener("click", () => {
-	window.location.assign("./login.html");
-});
+let userCredentials = {};
+// all Existing Users
+let existingUsers = [];
+// UserData in JSON
+let storedUserDataJSON = localStorage.getItem("allUserInfo");
 
-// object to store user credentials
-// let credentials = {};
-let allUsers = [];
-const storedUsers = JSON.parse(localStorage.getItem("allUsersData"));
-if (storedUsers) {
-	allUsers = storedUsers;
+if (storedUserDataJSON) {
+	existingUsers = JSON.parse(storedUserDataJSON);
 }
 
-console.log("All users : ", allUsers);
-// console.log(typeof allUsers);
-
-const signUpForm = document.querySelector("#signup-form");
+let successfulSignup = false; // Flag to indicate successful signup
 
 signUpForm.addEventListener("submit", (event) => {
 	event.preventDefault();
+	userCredentials = {
+		usernameValue: username.value,
+		emailValue: email.value,
+		passwordValue: password.value,
+		confirmPassValue: confirmPass.value,
+	};
+	let isUserSignedup = false;
 
-	//new user details
-	const username = document.getElementById("username").value;
-	const email = document.getElementById("email").value;
-	const pass = document.getElementById("pass").value;
-	const confirmPass = document.getElementById("confirm-pass").value;
+	// if true add user
+	if (validateUser(userCredentials)) {
+		let prevUsers = JSON.parse(localStorage.getItem("allUserInfo")) || [];
 
-	// previous users
-	let prevUsers = JSON.parse(localStorage.getItem("allUsersData")) || [];
+		// combining current + previous users
+		prevUsers.push(userCredentials);
 
-	// previous + current user
-	prevUsers.push({ username, email, pass, confirmPass });
-
-	// storing all users locally
-	localStorage.setItem("allUsersData", JSON.stringify(prevUsers));
-
-	// clear input fields
-	signUpForm.reset();
+		// storing user credentials in local storage
+		localStorage.setItem("allUserInfo", JSON.stringify(prevUsers));
+		signUpForm.reset();
+		isUserSignedup = true;
+		window.location.href = "./login.html";
+	} else {
+		console.log("false user credentials..");
+	}
 });
+
+// function to validate user
+function validateUser(user) {
+	let { usernameValue, emailValue, passwordValue, confirmPassValue } = user;
+	console.log(user);
+	let isValid = true;
+
+	// checking input fields
+	if (usernameValue === "") {
+		isValid = false;
+		setInputError(username, "username cannot be blank");
+	} else {
+		setInputSuccess(username);
+	}
+
+	if (emailValue === "") {
+		isValid = false;
+		setInputError(email, "email cannot be blank");
+	} else {
+		// check if email is already registered
+		const isEmailRegistered = existingUsers.some((existingUser) => {
+			return existingUser.emailValue === emailValue;
+		});
+
+		if (isEmailRegistered) {
+			isValid = false;
+			setInputError(email, "email already registered");
+		} else {
+			setInputSuccess(email);
+		}
+	}
+
+	if (passwordValue === "") {
+		isValid = false;
+		setInputError(password, "password cannot be blank");
+	} else {
+		setInputSuccess(password);
+	}
+
+	if (confirmPassValue === "") {
+		isValid = false;
+		setInputError(confirmPass, "confirm password cannot be blank");
+	} else if (passwordValue !== confirmPassValue) {
+		isValid = false;
+		setInputError(
+			confirmPass,
+			"password and confirm password should be same"
+		);
+	} else {
+		setInputSuccess(confirmPass);
+	}
+	return isValid;
+}
+
+function setInputError(input, message) {
+	const small = input.nextElementSibling;
+	small.classList.add("error");
+	small.innerText = message;
+	console.log(small, message);
+}
+function setInputSuccess(input) {
+	const field = input;
+	input.style.border = "1.5px solid green";
+	input.nextElementSibling.classList.remove("error");
+	console.log(field);
+}
+
+// navigate to login page on submit
+// if (isUserSignedup) {
+//     const submitSignup = document.querySelector(".submit-signup");
+//     submitSignup.addEventListener("click", () => {
+//         window.location.assign("./login.html");
+//     });
+// }

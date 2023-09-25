@@ -19,19 +19,27 @@
             </div>
 
             <div class="signup-form">
-                <form id="signup-form" action="">
+                <form id="signup-form">
                     <div class="fields">
-                        <input id="username" type="text" placeholder="Username" required>
-                        <input id="email" type="email" placeholder="Email" required />
-                        <input id="pass" type="password" placeholder="Password" autocomplete="true" required />
-                        <input id="confirm-pass" type="password" placeholder="Confirm password" autocomplete="true"
-                            required />
+                        <input id="username" type="text" name="username" placeholder="Username" />
+                        <small>Error msg</small>
+                        <input id="email" type="email" name="email" placeholder="Email" />
+                        <small>Error msg</small>
+                        <input id="pass" type="password" name="pass" placeholder="Password" />
+                        <small>Error msg</small>
+                        <input id="confirm-pass" type="password" name="confirm-pass" placeholder="Confirm password" />
+                        <small> Error msg</small>
                     </div>
-                    <button class="submit-signup blue-gradient" type="submit">SignUp</button>
+                    <button class="submit-signup blue-gradient" type="submit">
+                        SignUp
+                    </button>
                 </form>
             </div>
 
-            <p class="text">Already have an account <span class="login-link"><a href="./login.html">Login</a></span></p>
+            <p class="text">
+                Already have an account
+                <span class="login-link"><a href="./login.html">Login</a></span>
+            </p>
         </div>
     </main>
 </body>

@@ -6,7 +6,7 @@
 }
 
 body {
-    background: linear-gradient(to right, #9CC6FC, #D4C6FC);
+    background: linear-gradient(to right, #9cc6fc, #d4c6fc);
 }
 
 .blue-gradient {
@@ -85,12 +85,32 @@ form {
 }
 
 .fields input {
-    margin: 0.6rem 0;
+    /* margin: 0.6rem 0; */
+    margin-top: 0.6rem;
     font-size: 1.1rem;
     padding: 0.7rem 0 0.7rem 0.7rem;
     border-radius: 10px;
     outline: none;
-    border: 1px solid lightgrey;
+    border: 1.5px solid lightgrey;
+}
+
+.fields input.success {
+    border: 1.5px solid green;
+}
+
+.fields input.error {
+    border: 1.5px solid red;
+}
+
+.fields small {
+    text-align: left;
+    padding: 3px 0 3px 7px;
+    color: red;
+    visibility: hidden;
+}
+
+.fields small.error {
+    visibility: visible;
 }
 
 form button {
