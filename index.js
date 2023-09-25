@@ -12,13 +12,37 @@ loginBtn.addEventListener("click", () => {
 	window.location.assign("./login.html");
 });
 
-const submitLogin = document.querySelector(".submit-login");
-const submitSignup = document.querySelector(".submit-signup");
-console.log("submitLogin :", submitLogin);
-console.log("submitSignup :", submitSignup);
-submitSignup.addEventListener("click", function (e) {
-	console.log("submit-signup target:", e.target);
-});
-submitLogin.addEventListener("click", (e) => {
-	console.log("submit-login target:", e.target);
+// object to store user credentials
+// let credentials = {};
+let allUsers = [];
+const storedUsers = JSON.parse(localStorage.getItem("allUsersData"));
+if (storedUsers) {
+	allUsers = storedUsers;
+}
+
+console.log("All users : ", allUsers);
+// console.log(typeof allUsers);
+
+const signUpForm = document.querySelector("#signup-form");
+
+signUpForm.addEventListener("submit", (event) => {
+	event.preventDefault();
+
+	//new user details
+	const username = document.getElementById("username").value;
+	const email = document.getElementById("email").value;
+	const pass = document.getElementById("pass").value;
+	const confirmPass = document.getElementById("confirm-pass").value;
+
+	// previous users
+	let prevUsers = JSON.parse(localStorage.getItem("allUsersData")) || [];
+
+	// previous + current user
+	prevUsers.push({ username, email, pass, confirmPass });
+
+	// storing all users locally
+	localStorage.setItem("allUsersData", JSON.stringify(prevUsers));
+
+	// clear input fields
+	signUpForm.reset();
 });

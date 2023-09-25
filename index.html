@@ -19,12 +19,13 @@
             </div>
 
             <div class="signup-form">
-                <form action="">
+                <form id="signup-form" action="">
                     <div class="fields">
-                        <input type="text" placeholder="Username">
-                        <input type="email" placeholder="Email" />
-                        <input type="password" placeholder="Password" />
-                        <input type="password" placeholder="Confirm password" />
+                        <input id="username" type="text" placeholder="Username" required>
+                        <input id="email" type="email" placeholder="Email" required />
+                        <input id="pass" type="password" placeholder="Password" autocomplete="true" required />
+                        <input id="confirm-pass" type="password" placeholder="Confirm password" autocomplete="true"
+                            required />
                     </div>
                     <button class="submit-signup blue-gradient" type="submit">SignUp</button>
                 </form>
