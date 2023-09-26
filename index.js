@@ -64,7 +64,7 @@ if (loginForm) {
 			loginForm.reset();
 			isLoggedin = true;
 			if (isLoggedin) {
-				window.location.href = "./home.html";
+				window.location.href = "./homepage.html";
 			}
 			console.log("logged in successfully");
 		} else {
@@ -94,7 +94,6 @@ function validateUser(user) {
 		const isEmailRegistered = existingUsers.some((existingUser) => {
 			return existingUser.email === email;
 		});
-		console.log(isEmailRegistered);
 		if (isEmailRegistered) {
 			isValid = false;
 			setInputError(emailInput, "email already registered");
@@ -106,8 +105,12 @@ function validateUser(user) {
 	if (!password) {
 		isValid = false;
 		setInputError(passwordInput, "password cannot be blank");
+	} else if (!isValidPassword(password)) {
+		isValid = false;
+		// setInputError(passwordInput, "password condition not fullfilled");
 	} else {
 		setInputSuccess(passwordInput);
+		setInputError(passwordInput, "password condition fullfilled");
 	}
 
 	if (!confirmPassword) {
@@ -124,6 +127,65 @@ function validateUser(user) {
 		console.log("both passwords matched");
 	}
 	return isValid;
+}
+
+// function to validate password
+function isValidPassword(password) {
+	const specialCharacters = [
+		"!",
+		"@",
+		"#",
+		"$",
+		"%",
+		"^",
+		"&",
+		"*",
+		"(",
+		")",
+		"-",
+		"_",
+		"+",
+		"=",
+		"{",
+		"}",
+		"[",
+		"]",
+		"|",
+		"\\",
+		":",
+		";",
+		"'",
+		'"',
+		"<",
+		">",
+		",",
+		".",
+		"/",
+		"?",
+	];
+	let isPassword = true;
+	let hasSpecialChar = specialCharacters.some((spChar) => {
+		return password.includes(spChar);
+	});
+	let hasUpperandLowerCase = true;
+
+	if (password.length < 8 || password.length > 20) {
+		isPassword = false;
+		// console.log("password length must be between 8 and 20");
+		setInputError(
+			passwordInput,
+			"password length must be between 8 and 20"
+		);
+	} else if (!hasSpecialChar) {
+		isPassword = false;
+		// console.log("password must contain special characters");
+		setInputError(
+			passwordInput,
+			"password must contain special characters"
+		);
+	} else if (true) {
+	}
+	return isPassword;
 }
 
 // validate login credentials
@@ -188,14 +250,14 @@ function setInputSuccess(input) {
 // toggle between pages
 const currentPageUrl = window.location.href;
 
-signupBtn.addEventListener("click", () => {
-	if (currentPageUrl.includes("login.html")) {
-		window.location.href = "index.html";
-	}
-});
+// signupBtn.addEventListener("click", () => {
+// 	if (currentPageUrl.includes("login.html")) {
+// 		window.location.href = "index.html";
+// 	}
+// });
 
-loginBtn.addEventListener("click", () => {
-	if (currentPageUrl.includes("index.html")) {
-		window.location.href = "login.html";
-	}
-});
+// loginBtn.addEventListener("click", () => {
+// 	if (currentPageUrl.includes("index.html")) {
+// 		window.location.href = "login.html";
+// 	}
+// });
