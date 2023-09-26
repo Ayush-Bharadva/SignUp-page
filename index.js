@@ -5,8 +5,8 @@ const emailInput = document.querySelector("#email");
 const passwordInput = document.querySelector("#pass");
 const confirmPassInput = document.querySelector("#confirm-pass");
 const signupBtn = document.querySelector(".signup");
-// TODO change variable names, username -> userameValue, userameValue -> username(similarly for all)
-// all Existing Users
+const loginBtn = document.querySelector(".login");
+
 let existingUsers = [];
 // UserData in JSON
 let storedUserDataJSON = localStorage.getItem("allUserInfo");
@@ -17,22 +17,11 @@ if (storedUserDataJSON) {
 
 if (signUpForm) {
 	signUpForm.addEventListener("submit", (event) => {
-		// console.log(event);
-
 		event.preventDefault();
 
-		console.log(event.target, "event.target");
-
 		const form = new FormData(event.target).entries();
-
-		// for (const [key, value] of form) {
-		// 	console.log("key :", key, "value :", value);
-		// }
-		// console.log({ ...Object.fromEntries(form) });
-
-		const userDetails = { ...Object.fromEntries(form) };
-
-		console.log(userDetails, "userdetails");
+		const userSubmitDetails = Object.fromEntries(form);
+		const userDetails = { ...userSubmitDetails };
 
 		let isUserSignedup = false;
 
@@ -41,24 +30,50 @@ if (signUpForm) {
 			// combining current + previous users
 			existingUsers.push({ ...userDetails });
 
-			console.log(existingUsers, "existing users");
-
 			// storing user credentials in local storage
 			localStorage.setItem("allUserInfo", JSON.stringify(existingUsers));
-
 			signUpForm.reset();
-
 			isUserSignedup = true;
-			// if (isUserSignedup) {
-			// 	window.location.href = "./login.html";
-			// }
+
+			if (isUserSignedup) {
+				window.location.href = "./login.html";
+			}
+			console.log("signed up successfully");
 		} else {
 			console.log("false user credentials..");
 		}
 	});
 }
 
-// function to validate user
+// for login form operations
+const loginEmailInput = document.querySelector("#login-email");
+const loginPasswordInput = document.querySelector("#login-password");
+const loginForm = document.querySelector("#login-form");
+
+if (loginForm) {
+	loginForm.addEventListener("submit", (event) => {
+		event.preventDefault();
+
+		const form = new FormData(event.target);
+		const formLoginEntries = Object.fromEntries(form);
+		const userloginDetails = { ...formLoginEntries };
+
+		console.log(formLoginEntries);
+		let isLoggedin = false;
+		if (validateLogin(userloginDetails)) {
+			loginForm.reset();
+			isLoggedin = true;
+			if (isLoggedin) {
+				window.location.href = "./home.html";
+			}
+			console.log("logged in successfully");
+		} else {
+			console.log("didnot logged in");
+		}
+	});
+}
+
+// validate signup credentials
 function validateUser(user) {
 	let { username, email, password, confirmPassword } = user;
 	let isValid = true;
@@ -106,95 +121,81 @@ function validateUser(user) {
 		);
 	} else {
 		setInputSuccess(confirmPassInput);
+		console.log("both passwords matched");
 	}
-	console.log(isValid);
 	return isValid;
 }
 
-function setInputError(input, message) {
-	const small = input.nextElementSibling;
-	small.classList.add("error");
-	small.innerText = message;
-	// console.log(small, message);
-}
-function setInputSuccess(input) {
-	const field = input;
-	input.style.border = "1.5px solid green";
-	input.nextElementSibling.classList.remove("error");
-}
-
-// for login form operations
-const loginEmail = document.querySelector(".login-email");
-const loginPass = document.querySelector(".login-password");
-const loginForm = document.querySelector("#login-form");
-
-let loginCredentials = {};
-
-if (loginForm) {
-	loginForm.addEventListener("submit", (event) => {
-		event.preventDefault();
-		loginCredentials = {
-			emailValue: loginEmail.value,
-			passwordValue: loginPass.value,
-		};
-		let isLoggedin = false;
-		if (validateLogin(loginCredentials)) {
-			loginForm.reset();
-			isLoggedin = true;
-			if (isLoggedin) {
-				window.location.href = "./home.html";
-			}
-			console.log("logged in successfully");
-		} else {
-			console.log("didnot logged in");
-		}
-	});
-}
-
+// validate login credentials
 function validateLogin(user) {
-	let { emailValue, passwordValue } = user;
-
+	let { email, password } = user;
 	let isValidCredential = true;
 
 	// for email
-	if (emailValue) {
+	if (!email) {
 		isValidCredential = false;
 		console.log("email cannot be blank");
-		setInputError(loginEmail, "email cannot be blank");
+		setInputError(loginEmailInput, "email cannot be blank");
 	} else if (
 		existingUsers.every((existingUser) => {
-			return existingUser.emailValue !== emailValue;
+			return existingUser.email !== email;
 		})
 	) {
 		isValidCredential = false;
 		console.log("email does not exist");
-		setInputError(loginEmail, "email does not exist");
+		setInputError(loginEmailInput, "email does not exist");
 	} else {
 		isValidCredential = true;
 		console.log("login email exists");
-		setInputSuccess(loginEmail);
+		setInputSuccess(loginEmailInput);
 	}
 
 	// for password
 	isValiduser = existingUsers.some((existingUser) => {
 		return (
-			existingUser.emailValue === emailValue &&
-			existingUser.passwordValue === passwordValue
+			existingUser.email === email && existingUser.password === password
 		);
 	});
 
-	if (passwordValue === "") {
+	if (!password) {
 		isValidCredential = false;
 		console.log("password cannot be blank");
-		setInputError(loginPass, "password cannot be blank");
+		setInputError(loginPasswordInput, "password cannot be blank");
 	} else if (!isValiduser) {
 		isValidCredential = false;
 		console.log("username and password didnt match");
-		setInputError(loginPass, "username and password didnt match");
+		setInputError(loginPasswordInput, "username and password didnt match");
 	} else {
 		isValidCredential = true;
-		setInputSuccess(loginPass);
+		setInputSuccess(loginPasswordInput);
 		console.log("login user credentials matched");
 	}
 	return isValidCredential;
 }
+
+// function to generate error
+function setInputError(input, message) {
+	const small = input.nextElementSibling;
+	small.classList.add("error");
+	small.innerText = message;
+}
+// function to generate success fields
+function setInputSuccess(input) {
+	input.style.border = "1.5px solid green";
+	input.nextElementSibling.classList.remove("error");
+}
+
+// toggle between pages
+const currentPageUrl = window.location.href;
+
+signupBtn.addEventListener("click", () => {
+	if (currentPageUrl.includes("login.html")) {
+		window.location.href = "index.html";
+	}
+});
+
+loginBtn.addEventListener("click", () => {
+	if (currentPageUrl.includes("index.html")) {
+		window.location.href = "login.html";
+	}
+});
