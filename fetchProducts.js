@@ -7,9 +7,10 @@ let currentPage = 1;
 async function getProducts(page) {
 	const productsPerPage = 10;
 	let skip = (page - 1) * productsPerPage;
-	const URL = `https://dummyjson.com/products?limit=${productsPerPage}&skip=${skip}`;
 
+	const URL = `https://dummyjson.com/products?limit=${productsPerPage}&skip=${skip}`;
 	const response = await fetch(URL);
+
 	const data = response.json();
 	return data; //promise
 }
@@ -18,10 +19,15 @@ async function getProducts(page) {
 getProducts(currentPage)
 	.then((data) => {
 		for (const product of data.products) {
+			let discountedPrice = Math.floor(
+				product.price -
+					(product.price * product.discountPercentage) / 100
+			);
+
 			createNewElement(
 				product.thumbnail,
 				product.title,
-				product.price,
+				discountedPrice,
 				product.rating,
 				product.brand
 			);
@@ -72,7 +78,7 @@ function createNewElement(thumbnail, title, price, rating, brand) {
                 <img src="${thumbnail}" alt="">
             </div>
             <div class="title">${title}</div>
-            <div class="price">Price : $${price}</div>
+            <div class="price">Discounted Price : $${price}</div>
             <div class="rating">
 				<label for="rating">Ratings : ${rating}</label>
 				<progress id="rating" value="${rating}" max="5"></progress>
