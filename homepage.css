@@ -5,46 +5,111 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+body {
+    background: linear-gradient(to right, #9CC6FC, #D4C6FC);
+}
+
 img {
     width: 100%;
     height: 100%;
-    object-fit: fill;
+    object-fit: contain;
     border-radius: 10px;
-
 }
 
 .title,
 .price,
 .rating,
 .brand {
-    margin: 8px auto;
     font-weight: bold;
-    border: 3px solid red;
+    overflow: auto;
+    user-select: none;
 }
 
 .container {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    background: linear-gradient(to right, #9CC6FC, #D4C6FC);
+    width: 100%;
     height: fit-content;
     padding: 20px;
     flex-wrap: wrap;
+    gap: 60px;
 }
 
 .card {
-    background-color: lightgray;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 10px;
+    background-color: white;
     width: 18rem;
-    height: 20rem;
-    margin: 10px;
+    height: 21rem;
+    overflow: hidden;
     padding: 10px;
     text-align: center;
     cursor: pointer;
     border-radius: 10px;
-    overflow: hidden;
+    box-shadow: 0 10px 15px #666;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    scale: 1.03;
 }
 
 .card .img {
     width: 100%;
     height: 55%;
+}
+
+.rating progress {
+    width: 35%;
+    margin-left: 15px;
+}
+
+.price {
+    color: darkgoldenrod;
+}
+
+progress::-webkit-progress-bar {
+    background-color: #eeeeee;
+}
+
+progress::-webkit-progress-value {
+    background-color: #039603 !important;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    padding: 20px;
+}
+
+ul {
+    background-color: lightcyan;
+    padding: 10px 5px;
+    border-radius: 7px;
+}
+
+ul li {
+    display: inline-block;
+    list-style-type: none;
+    margin: 3px 7px;
+    cursor: pointer;
+    padding: 5px 20px;
+    border-radius: 8px;
+    border: 2px solid green;
+}
+
+ul li.active {
+    background-color: lightgreen;
+}
+
+ul li:hover {
+    background-color: green;
+    color: white;
 }
