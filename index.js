@@ -250,14 +250,14 @@ function setInputSuccess(input) {
 // toggle between pages
 const currentPageUrl = window.location.href;
 
-// signupBtn.addEventListener("click", () => {
-// 	if (currentPageUrl.includes("login.html")) {
-// 		window.location.href = "index.html";
-// 	}
-// });
+signupBtn.addEventListener("click", () => {
+	if (currentPageUrl.includes("login.html")) {
+		window.location.href = "index.html";
+	}
+});
 
-// loginBtn.addEventListener("click", () => {
-// 	if (currentPageUrl.includes("index.html")) {
-// 		window.location.href = "login.html";
-// 	}
-// });
+loginBtn.addEventListener("click", () => {
+	if (currentPageUrl.includes("index.html")) {
+		window.location.href = "login.html";
+	}
+});
