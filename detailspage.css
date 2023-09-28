@@ -1,0 +1,98 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: linear-gradient(to right, #9CC6FC, #D4C6FC);
+}
+
+/* color palette */
+.colors {
+    color: #053B50;
+    color: #176B87;
+    color: #64CCC5;
+    color: #EEEEEE;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+    display: block;
+}
+
+.container {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 80vw;
+    height: fit-content;
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0 10px 15px #666;
+}
+
+.detail-card {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    height: 80%;
+    gap: 30px;
+}
+
+.image {
+    background-color: rgb(246, 243, 243);
+    border-radius: 12px;
+}
+
+.info {
+    padding: 10px;
+    font-weight: bold;
+    font-size: 1.5rem;
+    height: 100%;
+}
+
+.title,
+.description,
+.price,
+.discount,
+.rating,
+.brand,
+.category {
+    margin: 1.5rem 0;
+}
+
+.title {
+    color: indigo;
+}
+
+.description {
+    font-weight: normal;
+}
+
+.price {
+    color: #176B87;
+}
+
+.discount::before {
+    content: "-";
+}
+
+span.discount {
+    font-size: 0.8rem;
+    background-color: #97d9ef;
+    color: #023447;
+    margin-left: 12px;
+    padding: 5px;
+    border-radius: 4px;
+    /* margin: 3px; */
+}

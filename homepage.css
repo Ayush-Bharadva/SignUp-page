@@ -22,7 +22,7 @@ img {
 .brand {
     font-weight: bold;
     overflow: auto;
-    user-select: none;
+    /* user-select: none; */
 }
 
 .container {
@@ -69,7 +69,7 @@ img {
 }
 
 .price {
-    color: darkgoldenrod;
+    color: #176B87;
 }
 
 progress::-webkit-progress-bar {

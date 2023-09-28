@@ -2,8 +2,9 @@
 
 const allPageLinks = document.querySelectorAll(".link"); // NodeList
 let currentPage = 1;
+let totalProducts;
 
-// function for fetch products
+// function for fetch all products(10)
 async function getProducts(page) {
 	const productsPerPage = 10;
 	let skip = (page - 1) * productsPerPage;
@@ -15,33 +16,34 @@ async function getProducts(page) {
 	return data; //promise
 }
 
-// to list first ten products
+// to list first ten products(first api call)*****************************
 getProducts(currentPage)
 	.then((data) => {
-		console.log("total products :", data.total);
+		let totalProducts = data.total;
+		let productsPerPage = 10;
+		createPages(totalProducts, productsPerPage);
 		for (const product of data.products) {
 			let discountedPrice = Math.floor(
 				product.price -
 					(product.price * product.discountPercentage) / 100
 			);
-			// console.log("stock :", product.stock);
-			createNewElement(
-				product.thumbnail,
-				product.title,
-				discountedPrice,
-				product.rating,
-				product.brand
-			);
+			createNewElement({ ...product }, discountedPrice);
 		}
 	})
 	.catch((error) => console.log(error));
 
-// pagination on li items
+// function to create pages for pagination*********************************
+function createPages(totalProducts, limit) {
+	let numberOfPages = Math.ceil(totalProducts / limit);
+	console.log("NumberOfPages :", numberOfPages);
+}
+
+// api call according to page numbers*************************************
 allPageLinks.forEach((link) => {
 	link.addEventListener("click", activeLink);
 });
 
-// function to keep track of current page
+// function to keep track of current page*********************************
 function activeLink(event) {
 	container.innerHTML = "";
 
@@ -52,42 +54,50 @@ function activeLink(event) {
 
 	currentPage = event.target.value;
 
-	console.log("currentPage :", currentPage);
-
-	// function to fetch products for specific page
+	// function to fetch products for specific page number*****************
 	getProducts(currentPage)
 		.then((data) => {
 			for (const product of data.products) {
-				createNewElement(
-					product.thumbnail,
-					product.title,
-					product.price,
-					product.rating,
-					product.brand
+				let discountedPrice = Math.floor(
+					product.price -
+						(product.price * product.discountPercentage) / 100
 				);
+				createNewElement({ ...product }, discountedPrice);
 			}
 		})
 		.catch((error) => console.log(error));
 }
 
-// create a new product card and append to container
+// create a new product card and append to container***********************
 const container = document.querySelector(".container");
-function createNewElement(thumbnail, title, price, rating, brand) {
+
+function createNewElement(product, discountedPrice) {
 	const card = document.createElement("div");
+	card.dataset.id = product.id;
 	const cardContent = `
             <div class="img">
-                <img src="${thumbnail}" alt="">
+                <img src="${product.thumbnail}" alt="">
             </div>
-            <div class="title">${title}</div>
-            <div class="price">Discounted Price : $${price}</div>
+            <div class="title">${product.title}</div>
+            <div class="price">Discounted Price : $${discountedPrice}</div>
             <div class="rating">
-				<label for="rating">Ratings : ${rating}</label>
-				<progress id="rating" value="${rating}" max="5"></progress>
+				<label for="rating">Ratings : ${product.rating}</label>
+				<progress id="rating" value="${product.rating}" max="5"></progress>
 			</div>
-            <div class="brand">Brand : ${brand}</div>`;
+            <div class="brand">Brand : ${product.brand}</div>`;
+
 	card.classList.add("card");
 	card.innerHTML = cardContent;
 	container.append(card);
-}
 
-// get product details section
+	// changing page on click of card
+	card.addEventListener("click", (e) => {
+		const id = e.currentTarget.getAttribute("data-id");
+
+		const currentPageUrl = window.location.href;
+		const updatedUrl = new URL(currentPageUrl);
+
+		updatedUrl.searchParams.set("productId", id);
+		window.location.href = "detailspage.html" + updatedUrl.search;
+	});
+}
