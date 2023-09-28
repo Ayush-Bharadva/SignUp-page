@@ -18,12 +18,13 @@ async function getProducts(page) {
 // to list first ten products
 getProducts(currentPage)
 	.then((data) => {
+		console.log("total products :", data.total);
 		for (const product of data.products) {
 			let discountedPrice = Math.floor(
 				product.price -
 					(product.price * product.discountPercentage) / 100
 			);
-
+			// console.log("stock :", product.stock);
 			createNewElement(
 				product.thumbnail,
 				product.title,
@@ -88,3 +89,5 @@ function createNewElement(thumbnail, title, price, rating, brand) {
 	card.innerHTML = cardContent;
 	container.append(card);
 }
+
+// get product details section
