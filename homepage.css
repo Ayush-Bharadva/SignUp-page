@@ -5,6 +5,13 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.colors {
+    color: #053B50;
+    color: #176B87;
+    color: #64CCC5;
+    color: #EEEEEE;
+}
+
 body {
     background: linear-gradient(to right, #9CC6FC, #D4C6FC);
 }
@@ -80,36 +87,49 @@ progress::-webkit-progress-value {
     background-color: #039603 !important;
 }
 
-.pagination {
+.pagination-container {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    margin-top: 30px;
-    padding: 20px;
+    padding: 8px;
+    position: fixed;
+    bottom: 0;
+    background-color: white;
+    width: 100%;
 }
 
-ul {
-    background-color: lightcyan;
+.pagination {
     padding: 10px 5px;
     border-radius: 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: transparent;
 }
 
-ul li {
+li {
+    list-style-type: none;
+}
+
+.btn {
     display: inline-block;
     list-style-type: none;
     margin: 3px 7px;
     cursor: pointer;
     padding: 5px 20px;
     border-radius: 8px;
-    border: 2px solid green;
+    /* border: 2px solid green; */
+    font-size: 1rem;
+    border: 2px solid #4b9dbe;
 }
 
-ul li.active {
-    background-color: lightgreen;
+.active {
+    background-color: #c8f3f0;
 }
 
-ul li:hover {
-    background-color: green;
-    color: white;
+.btn:hover {
+    background-color: #c8f3f0;
+    color: #053B50;
 }
