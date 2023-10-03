@@ -36,7 +36,7 @@ if (signUpForm) {
 			isUserSignedup = true;
 
 			if (isUserSignedup) {
-				window.location.href = "./login.html";
+				window.location.href = "./html/login.html";
 			}
 			console.log("signed up successfully");
 		} else {
@@ -253,7 +253,7 @@ const currentPageUrl = window.location.href;
 if (signupBtn) {
 	signupBtn.addEventListener("click", () => {
 		if (currentPageUrl.includes("login.html")) {
-			window.location.href = "index.html";
+			window.location.href = "../index.html";
 		}
 	});
 }
@@ -261,7 +261,7 @@ if (signupBtn) {
 if (loginBtn) {
 	loginBtn.addEventListener("click", () => {
 		if (currentPageUrl.includes("index.html")) {
-			window.location.href = "login.html";
+			window.location.href = "./html/login.html";
 		}
 	});
 }
