@@ -16,14 +16,13 @@ async function getProducts(pageNumber) {
 // function to create pages for pagination*********************************
 function createPages(totalProducts, limit) {
 	let numberOfPages = Math.ceil(totalProducts / limit);
-	console.log("total pages created :", numberOfPages);
+	// console.log("total pages created :", numberOfPages);
 	const pagination = document.querySelector(".pagination");
 
 	// pagination.innerHTML = "";
 	for (let i = 0; i <= numberOfPages + 1; i++) {
 		const newLi = document.createElement("li");
 		const newButton = document.createElement("button");
-		console.log("newPageButton :", newButton);
 		newButton.classList.add("btn");
 		newButton.value = i;
 
@@ -104,7 +103,7 @@ function createNewElement(product, discountedPrice) {
                 <img src="${product.thumbnail}" alt="">
             </div>
             <div class="title">${product.title}</div>
-            <div class="price">Discounted Price : $${discountedPrice}</div>
+            <div class="price">Discounted Price : $${discountedPrice}<span class="actual-price">$${product.price}</span> </div>
             <div class="rating">
 				<label for="rating">Ratings : ${product.rating}</label>
 				<progress id="rating" value="${product.rating}" max="5"></progress>

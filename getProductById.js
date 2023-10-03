@@ -1,4 +1,6 @@
 // to retrive the productId from url
+
+const backButton = document.querySelector("#back-btn");
 const urlParams = new URLSearchParams(window.location.search);
 const productId = urlParams.get("productId");
 console.log("productId :", productId);
@@ -31,7 +33,9 @@ function productDetailElemet(product) {
 					<div class="info">
 						<div class="title">${product.title}</div>
 						<div class="description">Description : ${product.description}</div>
-						<div class="price">$${discountedPrice}<span class="discount">${product.discountPercentage}%</span></div>
+						<div class="price">$${discountedPrice}
+						<span class="actual-price">$${product.price}</span> 
+						<span class="discount">${product.discountPercentage}%</span></div>
 						<div class="rating">
 							<label for="rating">Ratings : ${product.rating}</label>
 							<progress id="rating" value="${product.rating}" max="5"></progress>
@@ -44,3 +48,8 @@ function productDetailElemet(product) {
 	container.innerHTML = datailCardContent;
 	container.append(productDetailCard);
 }
+
+// backButton click event
+backButton.addEventListener("click", () => {
+	window.history.back();
+});
